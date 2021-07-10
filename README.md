@@ -19,5 +19,4 @@ will be added in the future:
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 
-Inline-style: 
-![alt text](https://github.com/patapik/AMIGA-ROM/edit/main/images/icon48.png "Logo Title Text 1")
+![alt text](https://github.com/patapik/AMIGA-ROM/blob/main/roompic.jpg "Logo Title Text 1")
