@@ -1,0 +1,7 @@
+# $Id$
+
+include $(SRCDIR)/config/aros.cfg
+
+%build_module mmake=kernel-openfirmware 	\
+  modname=openfirmware modtype=resource		\
+  cflags="$(CFLAGS)" files="of_init"

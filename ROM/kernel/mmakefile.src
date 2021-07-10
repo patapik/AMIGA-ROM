@@ -1,0 +1,50 @@
+# $Id$
+
+include $(SRCDIR)/config/aros.cfg
+
+#
+# Allow to override include files by placing them in arch-specific directories
+# Note that kernel_#?.h files must be included using #include <name>, not #include "name"
+# for this to work.
+# __AROS_EXEC_LIBRARY__ definition is needed for UNIX-hosted builds. kernel_base.h includes
+# kernel_cpu.h, which needs host OS includes for some CPU-specific defintions (host OS CPU context).
+# The code in rom/kernel is plain AROS code, it must not depend on host includes in any way, in order
+# not to overcomplicate the build. This definition prevents kernel_cpu.h from including host-specific
+# stuff. The name of this definition is legacy, in ancient times exec.library included some private
+# kernel's stuff and needed this.
+USER_INCLUDES := $(PRIV_KERNEL_INCLUDES)
+USER_CPPFLAGS := -D__AROS_EXEC_LIBRARY__ \
+	        -DAROS_ARCHITECTURE="\"$(AROS_TARGET_PLATFORM)\"" \
+
+# Allow to add architecture-specific options
+-include $(SRCDIR)/arch/all-$(ARCH)/kernel/make.opts
+-include $(SRCDIR)/arch/$(CPU)-$(ARCH)/kernel/make.opts
+ifneq ($(AROS_TARGET_VARIANT),)
+-include $(SRCDIR)/arch/$(CPU)-$(ARCH)/$(AROS_TARGET_VARIANT)/kernel/make.opts
+endif
+
+FUNCS :=     spininit spinislocked spintrylock spinlock spinunlock addexceptionhandler           \
+	     allocirq modifyirq addirqhandler modifyirqhandler cause cli sti                     \
+             bug createcontext deletecontext displayalert dispatch getbootinfo issuper mapglobal \
+	     remexceptionhandler remirqhandler schedule setprotection getscheduler setscheduler  \
+	     switch unmapglobal virtualtophysical obtaininput releaseinput 		         \
+	     putchar maygetchar allocpages freepages getsystemattr formatstr		         \
+	     initmemory statmemory _bug _displayalert 	                                         \
+	     getcpucount getcpunumber alloccpumask clearcpumask getcpumask cpuinmask             \
+             freecpumask schedulecpu allockernelbase prepareexecbase
+FILES     := kernel_init cpu_init kernel_debug kernel_panic                                      \
+	     kernel_cpu kernel_intr kernel_interruptcontroller                                   \
+	     kernel_memory kernel_romtags kernel_scheduler kernel_globals tlsf
+MMU_FILES := kernel_mm
+# You can replace this with own algorithm
+ALLOCATOR := mm_linear
+
+ifeq ($(USE_MMU),1)
+    FILES += $(MMU_FILES) $(ALLOCATOR)
+endif
+
+%build_module mmake=kernel-kernel \
+  modname=kernel modtype=resource version=$(AROS_TARGET_PLATFORM) \
+  files="$(FILES) $(FUNCS)" nostartup=no archspecific=yes
+
+%common

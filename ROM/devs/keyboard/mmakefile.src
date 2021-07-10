@@ -1,0 +1,16 @@
+#   $Id$
+
+include $(SRCDIR)/config/aros.cfg
+
+#MM- kernel-keyboard : includes linklibs
+
+USER_INCLUDES := -I$(SRCDIR)/rom/devs
+
+USER_CPPFLAGS := \
+               -DUSE_EXEC_DEBUG \
+               -D__OOP_NOLIBBASE__
+USER_LDFLAGS := -static
+
+%build_module mmake=kernel-keyboard \
+  modname=keyboard modtype=device \
+  files=keyboard

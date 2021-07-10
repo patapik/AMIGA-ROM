@@ -1,0 +1,69 @@
+# $Id$
+
+include $(SRCDIR)/config/aros.cfg
+
+FILES	  := basicfuncs createlayertaglist movelayerz
+
+FUNCS := \
+	beginupdate \
+	behindlayer \
+	changelayershape \
+	changelayervisibility \
+	collectpixelslayer \
+	createbehindhooklayer \
+	createbehindlayer \
+	createbehindlayertaglist \
+	createupfronthooklayer \
+	createupfrontlayer \
+	createupfrontlayertaglist \
+	deletelayer \
+	disposelayerinfo \
+	dohookcliprects \
+	endupdate \
+	fattenlayerinfo \
+	getfirstfamilymember \
+	initlayers \
+	installclipregion \
+	installlayerhook \
+	installlayerinfohook \
+	islayerhiddenbysibling \
+	islayervisible \
+	locklayer \
+	locklayerinfo \
+	locklayers \
+	movelayer \
+	movelayerinfrontof \
+	movesizelayer \
+	newlayerinfo \
+	scalelayer \
+	scrolllayer \
+	sizelayer \
+	sortlayercr \
+	swapbitsrastportcliprect \
+	thinlayerinfo \
+	unlocklayer \
+	unlocklayerinfo \
+	unlocklayers \
+	upfrontlayer \
+	whichlayer
+
+#MM kernel-layers : kernel-layers-$(ARCH)-$(CPU)
+#MM kernel-layers-kobj : kernel-layers-$(ARCH)-$(CPU)
+
+#MM kernel-layers-includes : \
+#MM     kernel-exec-includes \
+#MM     kernel-graphics-includes \
+#MM     kernel-utility-includes \
+#MM     includes-copy
+
+#MM- core-linklibs: linklibs-layers
+
+USER_CPPFLAGS := \
+               -DUSE_EXEC_DEBUG \
+	       -D__UTILITY_NOLIBBASE__ \
+	       -D__GRAPHICS_NOLIBBASE__
+USER_LDFLAGS := -static
+
+%build_module mmake=kernel-layers \
+  modname=layers modtype=library \
+  files="layers_init $(FUNCS) $(FILES)"

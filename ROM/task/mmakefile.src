@@ -1,0 +1,34 @@
+# Copyright © 2015-2020, The AROS Development Team. All rights reserved.
+# $Id$
+
+include $(SRCDIR)/config/aros.cfg
+
+#MM kernel-task-kobj: includes
+#MM kernel-task: includes
+
+INCLUDE_FILES := task.h
+
+USER_CPPFLAGS := \
+               -DUSE_EXEC_DEBUG
+USER_LDFLAGS := -static
+USER_INCLUDES += $(PRIV_EXEC_INCLUDES)
+
+TASKRES_FUNCS :=		\
+	    LockTaskList        \
+	    UnLockTaskList      \
+	    NextTaskEntry       \
+	    QueryTaskTagList    \
+	    InitTaskHooks       \
+	    AddTaskHook         \
+	    RunTaskHooks
+
+TASKRES_FILES :=		\
+	    task_init		\
+	    task_execfuncs	\
+            task_support	\
+	    $(TASKRES_FUNCS)
+
+%build_module mmake=kernel-task modname=task modtype=resource \
+    files="$(TASKRES_FILES)"
+
+%copy_includes path=resources

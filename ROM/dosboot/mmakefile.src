@@ -1,0 +1,27 @@
+# $Id$
+
+include $(SRCDIR)/config/aros.cfg
+
+NOMEDIA_IMAGE := nomedia
+
+FILES := dosboot_init bootstrap bootscan \
+         menu gadgets bootscreen bootanim cleanup
+
+#MM- kernel-dosboot-includes : kernel-bootloader-includes
+#MM- kernel-dosboot : includes linklibs kernel-bootloader-includes
+USER_CPPFLAGS := \
+               -DUSE_EXEC_DEBUG
+USER_INCLUDES := -I$(SRCDIR)/rom/devs -I$(GENDIR)/$(CURDIR)/dosboot
+USER_LDFLAGS := -static
+
+%build_module mmake=kernel-dosboot \
+  modname=dosboot modtype=resource \
+  files="$(FILES)" uselibs="hiddstubs"
+
+$(GENDIR)/$(CURDIR)/dosboot/bootanim.d : $(GENDIR)/$(CURDIR)/dosboot/nomedia_image.h
+
+$(GENDIR)/$(CURDIR)/dosboot/nomedia_image.h : $(NOMEDIA_IMAGE).ilbm
+	@$(ECHO) "Creating   $@..."
+	@$(ILBMTOC) $< >$@
+
+%common

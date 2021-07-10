@@ -1,0 +1,11 @@
+# Copyright © 2004-2008, The AROS Development Team. All rights reserved.
+# $Id$
+
+include $(SRCDIR)/config/aros.cfg
+
+ICONS := def_PSD
+
+#MM- kernel-usb-trident : kernel-usb-trident-icons
+
+%build_icons mmake=kernel-usb-trident-icons icons=$(ICONS) \
+             dir=$(AROS_ENVARC)/SYS

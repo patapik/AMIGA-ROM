@@ -1,0 +1,32 @@
+# $Id$
+
+include $(SRCDIR)/config/aros.cfg
+
+FILES := main \
+	bitmap \
+	cache \
+	checksums \
+	error \
+	extstrings \
+	filehandles1 \
+	filehandles2 \
+	filehandles3 \
+	hashing \
+	misc \
+	os_aros_support \
+	volumes \
+   	validator
+
+#MM- kernel-fs-afs : includes linklibs
+
+USER_CPPFLAGS := \
+               -DUSE_EXEC_DEBUG \
+	       -D__INTUITION_NOLIBBASE__ \
+	       -DADATE="\"$(shell date '+%d.%m.%Y')\""
+USER_LDFLAGS := -static
+
+%build_module mmake=kernel-fs-afs \
+    modname=afs modtype=handler \
+    files="$(FILES)"
+
+%common
