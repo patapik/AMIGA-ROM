@@ -1,6 +1,8 @@
 # AMIGA-ROM
 This is amiga rom replacement baces on Aros rom with SD boot. 
 
+for: A500 A600 A1000 A2000 A3000 A4000 Vampire V4
+
 This project aims to create a modern ROM with Early Startup Control for AMIGA computers.
 Currently the ROM supports booting from CF,SD,DF0 
 Gives the possibility to use several operating systems simultaneously
