@@ -20,5 +20,6 @@ will be added in the future:
 " target="_blank"><img src="http://img.youtube.com/vi/uOaze27mLO8/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
+![alt text](https://github.com/patapik/AMIGA-ROM/blob/main/rom11.jpg "Logo Title Text 1")
 
 ![alt text](https://github.com/patapik/AMIGA-ROM/blob/main/roompic.jpg "Logo Title Text 1")
