@@ -1,5 +1,5 @@
 # AMIGA-ROM
-This is amiga rom replacement baces on Aros rom with SD boot. 
+This is amiga rom replacement based on Aros rom with SD boot. 
 
 for: A500 A600 A1000 A2000 A3000 A4000 Vampire V4
 
